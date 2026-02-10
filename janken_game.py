@@ -95,7 +95,6 @@ if st.session_state.player_score < 3 and st.session_state.cpu_score < 3:
             st.rerun()
 
 # 最終結果表示
-# 最終結果表示
 else:
     st.write("ゲーム終了！")
     st.write(f"最終スコア - 君: {st.session_state.player_score} | CPU: {st.session_state.cpu_score}")
