@@ -8,6 +8,13 @@ from datetime import datetime
 # ファイル名を決める
 RECORD_FILE = "record.csv"
 
+# 戦績を記録する関数
+def save_record(result):
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open(RECORD_FILE, 'a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow([result, now])
+
 # ファイルが存在するか確認して、なければ作る
 if not os.path.exists(RECORD_FILE):
     with open(RECORD_FILE, 'w', newline='', encoding='utf-8') as f:
@@ -88,37 +95,28 @@ if st.session_state.player_score < 3 and st.session_state.cpu_score < 3:
             st.rerun()
 
 # 最終結果表示
+# 最終結果表示
 else:
     st.write("ゲーム終了！")
     st.write(f"最終スコア - 君: {st.session_state.player_score} | CPU: {st.session_state.cpu_score}")
     
-    # 勝敗表示と記録（まだ記録していない場合のみ）
+    # 勝敗表示
+    if st.session_state.player_score == 3:
+        st.write("おめでとう！君の勝ち！🏆")
+    else:
+        st.write("残念！負けちゃった！💻")
+
+    # 記録（まだ記録していない場合のみ）
     if not st.session_state.game_recorded:
         if st.session_state.player_score == 3:
-            st.write("おめでとう！君の勝ち！🏆")
-            # 勝ちを記録
-            now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            with open(RECORD_FILE, 'a', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(['勝ち', now])
+            save_record('勝ち')
         else:
-            st.write("残念！負けちゃった！💻")
-            # 負けを記録
-            now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            with open(RECORD_FILE, 'a', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(['負け', now])
-        st.session_state.game_recorded = True  # 記録済みフラグを立てる
-    else:
-        # 既に記録済み
-        if st.session_state.player_score == 3:
-            st.write("おめでとう！君の勝ち！🏆")
-        else:
-            st.write("残念！負けちゃった！💻")
-    
+            save_record('負け')
+        st.session_state.game_recorded = True
+
     # リセットボタン
     if st.button("もう一回！🔄"):
         st.session_state.player_score = 0
         st.session_state.cpu_score = 0
-        st.session_state.game_recorded = False  # フラグをリセット
+        st.session_state.game_recorded = False
         st.rerun()
