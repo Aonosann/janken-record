@@ -31,5 +31,6 @@ pip install -r requirements.txt
 
 ### 実行
 ```bash
-streamlit run app.py
+streamlit run janken_game.py
 ```
+
