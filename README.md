@@ -31,17 +31,5 @@ pip install -r requirements.txt
 
 ### 実行
 ```bash
-streamlit run janken_game.py
+streamlit run janken_record.py
 ```
-
-## 学んだこと
-
-- 仮想環境の使い方
-- CSVファイルの読み書き
-- pandasでのデータ処理
-- Streamlitのsession_state管理
-- Gitの基本的な使い方
-
-## リポジトリ
-
-https://github.com/Aonosann/janken-record
