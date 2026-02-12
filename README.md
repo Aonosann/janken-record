@@ -31,5 +31,5 @@ pip install -r requirements.txt
 
 ### 実行
 ```bash
-streamlit run janken_record.py
+streamlit run app.py
 ```
